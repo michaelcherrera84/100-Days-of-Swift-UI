@@ -1,0 +1,29 @@
+{
+  "activityEntities" : [
+    "projectCreated",
+    [
+      {
+        "createdDate" : "2025-10-12T16:37:22Z",
+        "event" : "projectCreated",
+        "id" : "1DCE4601-35F2-4F0F-9E5F-71681E75FEFC",
+        "subtitle" : "BetterRest",
+        "title" : "Project Created"
+      }
+    ]
+  ],
+  "authorName" : "Michael C. Herrera",
+  "createdDate" : "2025-10-12T16:37:22Z",
+  "description" : "",
+  "id" : "44707F9B-AD75-49A7-8B19-AF7028AD0995",
+  "license" : "",
+  "location" : "",
+  "modifiedDate" : "2025-10-12T16:37:22Z",
+  "projectName" : "BetterRest",
+  "settingsEntity" : {
+    "snapshotOnExtendTraining" : true,
+    "snapshotOnResumeTraining" : false
+  },
+  "taskType" : "generalRegresor",
+  "title" : "Tabular Regression",
+  "version" : "1.1"
+}
