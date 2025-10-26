@@ -5,6 +5,7 @@
 //  Created by Michael C. Herrera on 10/24/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct UserDetailView: View {
@@ -56,21 +57,32 @@ struct UserDetailView: View {
 }
 
 #Preview {
-    let example = User(
-        id: UUID(),
-        isActive: true,
-        name: "Jane Doe",
-        age: 30,
-        company: "Acme Corp",
-        email: "jane.doe@example.com",
-        address: "1 Infinite Loop, Cupertino, CA",
-        about: "Enthusiastic iOS developer who loves SwiftUI and coffee.",
-        registered: Date(),
-        tags: ["swift", "ios", "friendface"],
-        friends: [
-            Friend(id: UUID(), name: "John Appleseed"),
-            Friend(id: UUID(), name: "Ava Smith"),
-        ]
-    )
-    UserDetailView(user: example)
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: User.self, configurations: config)
+        let user = User(
+            isActive: true,
+            name: "Michael Herrera",
+            age: 41,
+            company: "michaelcherrera.com",
+            email: "michael.c.herrera@icloud.com",
+            address: "123 Main St, San Francisco, CA 94107",
+            about: "Aspirit software engineer",
+            registered: .now,
+            tags: [
+                "swift", "ios", "swiftui", "swift_data", "java", "javascript", "react", "python", "c#", "c++",
+                "typescript",
+            ],
+            friends: [
+                Friend(name: "Bree"),
+                Friend(name: "Kaden"),
+                Friend(name: "Lila"),
+                Friend(name: "Ava"),
+            ]
+        )
+        return UserDetailView(user: user)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create container: \(error.localizedDescription)")
+    }
 }
