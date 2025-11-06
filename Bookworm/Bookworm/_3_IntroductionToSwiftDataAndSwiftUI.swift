@@ -39,6 +39,6 @@ struct _3_IntroductionToSwiftDataAndSwiftUI: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Student.self, configurations: config)
     
-    return try! _3_IntroductionToSwiftDataAndSwiftUI()
+    return _3_IntroductionToSwiftDataAndSwiftUI()
         .modelContainer(container)
 }
