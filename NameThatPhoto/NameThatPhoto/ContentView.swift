@@ -12,7 +12,6 @@ struct ContentView: View {
     @State private var pickerItem: PhotosPickerItem?
     @State private var imageData: Data?
     @State private var selectedImage: Image?
-    @State private var imageName = ""
     @State private var addNameIsShown = false
 
     @State private var viewModel = ViewModel()
@@ -21,17 +20,7 @@ struct ContentView: View {
         NavigationStack {
             List(viewModel.namedPhotos.sorted(), id: \.self) { photo in
                 NavigationLink {
-                    if let uiImage = UIImage(data: photo.photo) {
-                        HStack {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                        }
-                        .navigationTitle(photo.name)
-                        .navigationBarTitleDisplayMode(.inline)
-                        
-                        Spacer()
-                    }
+                    PhotoDetailView(photo: photo)
                 } label: {
                     if let uiImage = UIImage(data: photo.photo) {
                         HStack {
@@ -40,7 +29,7 @@ struct ContentView: View {
                                 .frame(width: 50, height: 50)
                                 .clipped()
                                 .padding(.trailing, 5)
-                            
+
                             Text(photo.name)
                         }
                     }
@@ -60,7 +49,6 @@ struct ContentView: View {
                             await MainActor.run {
                                 selectedImage = Image(uiImage: uiImage)
                                 pickerItem = nil
-                                imageName = ""
                                 addNameIsShown = true
                             }
                         }
@@ -69,25 +57,11 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $addNameIsShown) {
-            VStack {
-                if let image = selectedImage {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                }
-
-                TextField("Name this image", text: $imageName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                Button("Add Named Photo") {
-                    let newNamedPhoto = NamedPhoto(name: imageName, photo: imageData!)
-
-                    viewModel.add(namedPhoto: newNamedPhoto)
-
-                    addNameIsShown.toggle()
-                }
+            AddDetailsView(
+                selectedImage: selectedImage,
+                imageData: imageData
+            ) { newNamedPhoto in
+                viewModel.add(namedPhoto: newNamedPhoto)
             }
         }
     }
